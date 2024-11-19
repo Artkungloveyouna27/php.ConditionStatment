@@ -46,7 +46,7 @@
                 echo "คุณพูดมากเหมือนนก";
                 break;    
             default;
-                echo "คุณเ)็นมนุษย์ Introvert<br>";
+                echo "คุณเป็นมนุษย์ Introvert<br>";
                 break;
         
         }
