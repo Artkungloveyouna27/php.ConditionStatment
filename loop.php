@@ -53,7 +53,7 @@
         echo "<h2>Foreach loop แบบ key=>value</h2>";
         $food = array("หมวย"=> "ส้มตำ","บูม" =>"หมูย่าง","บีม"=>"ผัดกระเพรา","อาร์ต"=>"ข้าวมันไก่");
         foreach ($food as $student => $value) {
-            echo "ชื่อ$student ชอบกิน$value<br>";
+            echo "ชื่อ$student ชอบบบกิน$value<br>";
         }
 
     ?>
