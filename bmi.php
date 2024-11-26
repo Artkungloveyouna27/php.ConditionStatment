@@ -120,9 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="button-container">
-    <a href="bmi_form.php">กลับไปหน้าหลัก</a>
-</div>
+    <a href="bmi_form.php" class="back-link">กลับไปหน้าคำนวณ BMI</a>
 </div>
 
 </body>
