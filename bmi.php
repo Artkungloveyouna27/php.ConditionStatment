@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            background: linear-gradient(to right, #FF5733, #FFBD33, #75FF33, #33FF57, #33B5FF, #5733FF, #FF33A6);
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,11 +19,11 @@
 
         .container {
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
-            padding: 20px;
+            padding: 30px;
             box-sizing: border-box;
             text-align: center;
         }
@@ -32,6 +32,9 @@
             color: #2c3e50;
             font-size: 24px;
             margin-bottom: 20px;
+            background: linear-gradient(to left, #FF5733, #FFBD33, #75FF33, #33FF57, #33B5FF, #5733FF, #FF33A6);
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         p {
@@ -62,53 +65,64 @@
             margin-top: 20px;
             font-size: 16px;
             text-decoration: none;
-            color: #2980b9;
-            border: 1px solid #2980b9;
+            color: #fff;
+            background: linear-gradient(45deg, #FF5733, #FFBD33, #75FF33);
+            border: 1px solid transparent;
             padding: 8px 16px;
             border-radius: 5px;
+            transition: background 0.3s ease;
         }
 
         .back-link:hover {
-            background-color: #2980b9;
+            background: linear-gradient(45deg, #33B5FF, #FF33A6);
             color: #fff;
         }
+
+        .result, .category, .error {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>ผลลัพธ์การคำนวณค่า BMI</h1>
+<h1>ผลลัพธ์การคำนวณ BMI</h1>
 
-    <?php
-    // รับค่าจากฟอร์ม
-    $weight = isset($_POST['weight']) ? $_POST['weight'] : null;
-    $height = isset($_POST['height']) ? $_POST['height'] : null;
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // ตรวจสอบว่ามีข้อมูลครบถ้วนหรือไม่
-    if ($weight && $height) {
-        // คำนวณ BMI
-        $bmi = $weight / ($height * $height);
+    $weight = $_POST['weight']; // น้ำหนัก (กิโลกรัม)
+    $height = $_POST['height']; // ส่วนสูง (เซนติเมตร)
 
-        echo "<p>น้ำหนัก: $weight kg</p>";
-        echo "<p>ส่วนสูง: $height m</p>";
-        echo "<p class='result'>BMI: " . number_format($bmi, 2) . "</p>";
+    $heightInMeters = $height / 100;  // แปลงส่วนสูงเป็นเมตร
 
-        // การแปลผล BMI
-        if ($bmi < 18.5) {
-            echo "<p class='category'>ผลลัพธ์: น้ำหนักต่ำกว่าเกณฑ์</p>";
-        } elseif ($bmi >= 18.5 && $bmi < 24.9) {
-            echo "<p class='category'>ผลลัพธ์: น้ำหนักปกติ</p>";
-        } elseif ($bmi >= 25 && $bmi < 29.9) {
-            echo "<p class='category'>ผลลัพธ์: น้ำหนักเกิน</p>";
-        } else {
-            echo "<p class='category'>ผลลัพธ์: อ้วน</p>";
-        }
+    $bmi = $weight / ($heightInMeters * $heightInMeters);  // คำนวณ BMI
+
+    echo "<div class='result'>";
+    echo "<h3>น้ำหนัก: $weight กิโลกรัม</h3>";
+    echo "<h3>ส่วนสูง: $height เซนติเมตร</h3>";
+    echo "<h3>BMI: " . number_format($bmi, 2) . "</h3>";
+
+    if ($bmi < 18.5) {
+        echo "<p class='bmi-category bmi-category-underweight'>ผลการประเมิน: น้ำหนักน้อยกว่ามาตรฐาน</p>";
+    } elseif ($bmi >= 18.5 && $bmi < 24.9) {
+        echo "<p class='bmi-category bmi-category-normal'>ผลการประเมิน: น้ำหนักปกติ</p>";
+    } elseif ($bmi >= 25 && $bmi < 29.9) {
+        echo "<p class='bmi-category bmi-category-overweight'>ผลการประเมิน: น้ำหนักเกิน</p>";
     } else {
-        echo "<p class='error'>กรุณากรอกข้อมูลให้ครบถ้วน</p>";
+        echo "<p class='bmi-category bmi-category-obese'>ผลการประเมิน: โรคอ้วน</p>";
     }
-    ?>
 
-    <a href="bmi_form.php" class="back-link">กลับไปหน้าคำนวณ BMI</a>
+    echo "</div>";
+} else {
+    echo "<p>กรุณากรอกข้อมูลในฟอร์มเพื่อคำนวณ BMI</p>";
+}
+?>
+
+<div class="button-container">
+    <a href="bmi_form.php">กลับไปหน้าหลัก</a>
+</div>
 </div>
 
 </body>

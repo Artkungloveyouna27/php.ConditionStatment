@@ -98,11 +98,12 @@
     <h1>คำนวณค่า BMI</h1>
 
     <form action="bmi.php" method="POST">
-        <label for="weight">น้ำหนัก (kg)</label>
-        <input type="text" name="weight" id="weight" required> 
-
+        <!-- สลับตำแหน่งส่วนสูงและน้ำหนัก -->
         <label for="height">ส่วนสูง (m)</label>
         <input type="text" name="height" id="height" required> 
+
+        <label for="weight">น้ำหนัก (kg)</label>
+        <input type="text" name="weight" id="weight" required> 
 
         <input type="submit" value="คำนวณ BMI">
         <input type="reset" value="รีเซ็ต" class="reset-btn">
