@@ -22,7 +22,7 @@
 
         echo "<hr>";
 
-        echo "<h2>การใช้ข้อมูลจาก Server ด้วย \$_SERVER</h2>";
+        echo "<h2>การใช้ข้อมูลจาก Serverr ด้วย \$_SERVER</h2>";
         echo $_SERVER['PHP_SELF'];
         echo "<br>";
         echo $_SERVER['SERVER_NAME'];
