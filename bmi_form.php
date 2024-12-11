@@ -98,6 +98,15 @@
     <h1>คำนวณค่า BMI</h1>
 
     <form action="bmi.php" method="POST">
+        <label for="first-name">ชื่อ</label>
+        <input type="text" name="first-name" id="first-name" required> 
+
+        <label for="last-name">นามสกุล</label>
+        <input type="text" name="last-name" id="last-name" required> 
+
+        <label for="age">อายุ (ปี)</label>
+        <input type="text" name="age" id="age" required> 
+
         <label for="weight">น้ำหนัก (kg)</label>
         <input type="text" name="weight" id="weight" required> 
 
