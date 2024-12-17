@@ -90,38 +90,58 @@
 <h1>ผลลัพธ์การคำนวณ BMI</h1>
 
 <?php
+// ฟังก์ชันสำหรับคำนวณ BMI
+function calculateBMI($weight, $heightInCentimeters) {
+    $heightInMeters = $heightInCentimeters / 100;  // แปลงเป็นเมตร
+    return $weight / ($heightInMeters * $heightInMeters);  // สูตร BMI
+}
+
+// ฟังก์ชันสำหรับแปลผลการประเมิน BMI พร้อมคำแนะนำ
+function evaluateBMI($bmi) {
+    if ($bmi < 18.5) {
+        return [
+            'category' => "น้ำหนักน้อยกว่ามาตรฐาน",
+            'advice' => "ควรรับประทานอาหารให้ครบ 5 หมู่ และเพิ่มปริมาณแคลอรี่ให้เหมาะสม พร้อมออกกำลังกายเบา ๆ เพื่อเพิ่มน้ำหนักอย่างสุขภาพดี"
+        ];
+    } elseif ($bmi >= 18.5 && $bmi < 24.9) {
+        return [
+            'category' => "น้ำหนักปกติ",
+            'advice' => "ควรรักษาสมดุลน้ำหนักต่อไป ด้วยการออกกำลังกายอย่างสม่ำเสมอและรับประทานอาหารที่ดีต่อสุขภาพ"
+        ];
+    } elseif ($bmi >= 25 && $bmi < 29.9) {
+        return [
+            'category' => "น้ำหนักเกิน",
+            'advice' => "ควรลดปริมาณอาหารที่มีไขมันสูง และหันมาทานผักและผลไม้มากขึ้น รวมทั้งออกกำลังกายเพื่อควบคุมน้ำหนัก"
+        ];
+    } else {
+        return [
+            'category' => "โรคอ้วน",
+            'advice' => "ควรปรึกษาแพทย์หรือนักโภชนาการเพื่อวางแผนการลดน้ำหนักอย่างเหมาะสม พร้อมทั้งออกกำลังกายภายใต้การแนะนำที่ถูกต้อง"
+        ];
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // รับข้อมูลจากฟอร์ม
-    $firstName = $_POST['first-name']; 
-    $lastName = $_POST['last-name']; 
-    $age = $_POST['age']; 
-    $weight = $_POST['weight']; 
-    $height = $_POST['height']; 
+    $firstName = htmlspecialchars($_POST['first-name']);
+    $lastName = htmlspecialchars($_POST['last-name']);
+    $age = (int)$_POST['age'];
+    $weight = (float)$_POST['weight'];
+    $height = (float)$_POST['height'];
 
-    // แปลงส่วนสูงเป็นเมตร
-    $heightInMeters = $height / 100;  
+    // คำนวณ BMI
+    $bmi = calculateBMI($weight, $height);
+    $evaluation = evaluateBMI($bmi);
 
-    // คำนวณค่า BMI
-    $bmi = $weight / ($heightInMeters * $heightInMeters);  
-
-    // แสดงข้อมูลผู้ใช้
+    // แสดงผลลัพธ์
     echo "<div class='result'>";
     echo "<h3>ชื่อ: $firstName $lastName</h3>";
     echo "<h3>อายุ: $age ปี</h3>";
     echo "<h3>น้ำหนัก: $weight กิโลกรัม</h3>";
     echo "<h3>ส่วนสูง: $height เซนติเมตร</h3>";
     echo "<h3>BMI: " . number_format($bmi, 2) . "</h3>";
-
-    // แสดงผลการประเมิน
-    if ($bmi < 18.5) {
-        echo "<p class='category'>ผลการประเมิน: น้ำหนักน้อยกว่ามาตรฐาน</p>";
-    } elseif ($bmi >= 18.5 && $bmi < 24.9) {
-        echo "<p class='category'>ผลการประเมิน: น้ำหนักปกติ</p>";
-    } elseif ($bmi >= 25 && $bmi < 29.9) {
-        echo "<p class='category'>ผลการประเมิน: น้ำหนักเกิน</p>";
-    } else {
-        echo "<p class='category'>ผลการประเมิน: โรคอ้วน</p>";
-    }
+    echo "<p class='category'>ผลการประเมิน: {$evaluation['category']}</p>";
+    echo "<p class='advice'><strong>คำแนะนำ:</strong> {$evaluation['advice']}</p>";
     echo "</div>";
 } else {
     echo "<p class='error'>กรุณากรอกข้อมูลในฟอร์มเพื่อคำนวณ BMI</p>";
