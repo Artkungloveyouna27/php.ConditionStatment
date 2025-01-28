@@ -26,6 +26,9 @@
             padding: 30px;
             box-sizing: border-box;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -43,6 +46,7 @@
             margin-bottom: 5px;
             display: block;
             text-align: left;
+            width: 100%;
         }
 
         input[type="text"] {
@@ -59,6 +63,12 @@
             border-color: #FF5733;
         }
 
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
         input[type="submit"], input[type="reset"] {
             background: linear-gradient(45deg, #FF5733, #33FF57);
             color: white;
@@ -68,7 +78,6 @@
             font-size: 16px;
             cursor: pointer;
             width: 48%;
-            margin: 10px 1%;
             transition: background 0.3s ease-in-out;
         }
 
@@ -88,6 +97,7 @@
             margin-top: 20px;
             font-size: 14px;
             color: #777;
+            text-align: center;
         }
 
     </style>
@@ -113,8 +123,10 @@
         <label for="height">ส่วนสูง (m)</label>
         <input type="text" name="height" id="height" required> 
 
-        <input type="submit" value="คำนวณ BMI">
-        <input type="reset" value="รีเซ็ต" class="reset-btn">
+        <div class="button-group">
+            <input type="submit" value="คำนวณ BMI">
+            <input type="reset" value="รีเซ็ต" class="reset-btn">
+        </div>
     </form>
     
     <div class="form-footer">
